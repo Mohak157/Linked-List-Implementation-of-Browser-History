@@ -61,6 +61,7 @@ void front_navigate() // move node one step front
     }
 
     current = current->next;
+    loadingbar();
     printf("URL is %s\n", current->url);
 }
 void back_navigate()
@@ -72,6 +73,7 @@ void back_navigate()
     }
 
     current = current->prev;
+    loadingbar();
     printf("URL is %s\n", current->url);
 }
 void delete_a_single_page(int pos)
@@ -105,11 +107,13 @@ void delete_a_single_page(int pos)
     }
 
     struct Page *deletionnode = temp;
+    loadingbar();
     free(deletionnode);
 }
 
 void full_history()
 { // show all nodes
+    loadingbar();
     if (start == NULL)
     {
         printf("History Empty \n");
@@ -136,7 +140,7 @@ void clear_all_history()
     struct Page *temp = start;
     while (temp != NULL)
     {
-        printf("Deleting..");
+        printf("Deleting..\n");
         struct Page *deletionitem = temp;
 
         temp = temp->next;
