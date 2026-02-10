@@ -10,6 +10,8 @@ struct Page
     struct Page *prev;
 };
 struct Page *start = NULL;
+struct Page *current = NULL;
+
 void loadingbar()
 { // loading bar effect using sleep()
     printf("Loading ::");
@@ -41,6 +43,7 @@ void page_visit()
     if (start == NULL)
     {
         start = newpage;
+        current = newpage;
         return;
     }
     newpage->next = start;
@@ -49,25 +52,27 @@ void page_visit()
     start = newpage;
 }
 
-void front_navigate()
+void front_navigate() // move node one step front
 {
-    if (start == NULL || start->next == NULL)
+    if (start == NULL || current->next == NULL)
     {
         printf("No page");
         return;
     }
-    start = start->next;
-    printf("URL is %s\n", start->url);
+
+    current = current->next;
+    printf("URL is %s\n", current->url);
 }
 void back_navigate()
-{
-    if (start == NULL || start->prev == NULL)
+{ // move node one step back
+    if (start == NULL || current->prev == NULL)
     {
         printf("No page");
         return;
     }
-    start = start->prev;
-    printf("URL is %s\n", start->url);
+
+    current = current->prev;
+    printf("URL is %s\n", current->url);
 }
 void delete_a_single_page(int pos)
 { // delete a single node at a position
@@ -77,13 +82,33 @@ void delete_a_single_page(int pos)
         return;
     }
     struct Page *temp = start;
-    for (int i = 1; i < pos; i++)
+    for (int i = 1; i < pos && temp != NULL; i++)
     {
         temp = temp->next;
     }
+    if (temp == NULL)
+    {
+        printf("Page doesent exist");
+        return;
+    }
+    if (temp->prev == NULL) // checks if temp is at the start
+    {
+        start = start->next;
+    }
+    else
+    {
+        temp->prev->next = temp->next;
+    }
+    if (temp->next != NULL)
+    { // checks if temp is at the end
+        temp->next->prev = temp->prev;
+    }
+    else
+    {
+        temp->prev->next = NULL;
+    }
+
     struct Page *deletionnode = temp;
-    temp->next->prev = temp->prev;
-    temp->prev->next = temp->next;
     free(deletionnode);
 }
 
@@ -117,10 +142,12 @@ void clear_all_history()
     {
         printf("Deleting..");
         struct Page *deletionitem = temp;
-        free(deletionitem);
+
         temp = temp->next;
+        free(deletionitem);
     }
     start = NULL;
+    current = NULL;
     loadingbar();
     printf("History cleared\t");
 }
@@ -160,22 +187,22 @@ int main()
             full_history();
             break;
         case 3:
-        clear_all_history();
-        break;
+            clear_all_history();
+            break;
         case 4:
-        int poisition;
-        printf("Enter the position of the page u want to delete\t");
-        scanf("%d",&poisition);
-        delete_a_single_page(poisition);
-        break;
+            int poisition;
+            printf("Enter the position of the page u want to delete\t");
+            scanf("%d", &poisition);
+            delete_a_single_page(poisition);
+            break;
         case 5:
-        front_navigate();
-        break;
+            front_navigate();
+            break;
         case 6:
-        back_navigate();
-        break;
+            back_navigate();
+            break;
         default:
-        printf("Invalid");
+            printf("Invalid");
         }
     }
 }
