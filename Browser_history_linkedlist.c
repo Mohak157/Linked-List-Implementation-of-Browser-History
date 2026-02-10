@@ -36,6 +36,7 @@ void page_visit()
     printf("Enter the url of the site ur visiting:");
     scanf("%s", url);
     loadingbar();
+
     struct Page *newpage = add_history(url);
     if (start == NULL)
     {
@@ -47,16 +48,45 @@ void page_visit()
     start->prev = newpage;
     start = newpage;
 }
+
+void front_navigate()
+{
+    if (start == NULL || start->next == NULL)
+    {
+        printf("No page");
+        return;
+    }
+    start = start->next;
+    printf("URL is %s\n", start->url);
+}
+void back_navigate()
+{
+    if (start == NULL || start->prev == NULL)
+    {
+        printf("No page");
+        return;
+    }
+    start = start->prev;
+    printf("URL is %s\n", start->url);
+}
 void delete_a_single_page(int pos)
 { // delete a single node at a position
-    struct Page* temp= start;
-    for(int i=1;i<pos;i++){
-        temp=temp->next;
-
+    if (start == NULL)
+    {
+        printf("No History");
+        return;
     }
-    struct Page* deletionnode = temp;
+    struct Page *temp = start;
+    for (int i = 1; i < pos; i++)
+    {
+        temp = temp->next;
+    }
+    struct Page *deletionnode = temp;
+    temp->next->prev = temp->prev;
+    temp->prev->next = temp->next;
     free(deletionnode);
 }
+
 void full_history()
 { // show all nodes
     if (start == NULL)
@@ -64,12 +94,12 @@ void full_history()
         printf("History Empty \n");
         return;
     }
-    int count=1;
+    int count = 1;
     struct Page *temp = start;
     while (temp != NULL)
     {
 
-        printf("%d : Page = %s\n", count,temp->url);
+        printf("%d : Page = %s\n", count, temp->url);
         temp = temp->next;
         count++;
     }
@@ -90,12 +120,25 @@ void clear_all_history()
         free(deletionitem);
         temp = temp->next;
     }
+    start = NULL;
     loadingbar();
     printf("History cleared\t");
 }
 
 int main()
 {
+    printf(" __    __  ______   ______  ________   ______   _______  __      __ \n");
+    printf("|  \\  |  \\|      \\ /      \\|        \\ /      \\ |       \\|  \\    /  \\\n");
+    printf("| $$  | $$ \\$$$$$$|  $$$$$$\\\\$$$$$$$$|  $$$$$$\\| $$$$$$$\\\\$$\\  /  $$\n");
+    printf("| $__| $$  | $$  | $$___\\$$  | $$   | $$  | $$| $$__| $$ \\$$\\/  $$ \n");
+    printf("| $$    $$  | $$   \\$$    \\   | $$   | $$  | $$| $$    $$  \\$$  $$  \n");
+    printf("| $$$$$$$$  | $$   _\\$$$$$$\\  | $$   | $$  | $$| $$$$$$$\\   \\$$$$   \n");
+    printf("| $$  | $$ _| $$_ |  \\__| $$  | $$   | $$__/ $$| $$  | $$   | $$    \n");
+    printf("| $$  | $$|   $$ \\ \\$$    $$  | $$    \\$$    $$| $$  | $$   | $$    \n");
+    printf(" \\$$   \\$$ \\$$$$$$  \\$$$$$$    \\$$     \\$$$$$$  \\$$   \\$$    \\$$    \n");
+    printf("                                                                    \n");
+    printf("                                                                    \n");
+
     page_visit();
     page_visit();
     full_history();
