@@ -50,7 +50,7 @@ void page_visit()
     newpage->prev = NULL;
     start->prev = newpage;
     start = newpage;
-    current=newpage;
+    current = newpage;
 }
 
 void front_navigate() // move node one step front
@@ -105,6 +105,22 @@ void delete_a_single_page(int pos)
     if (temp->next != NULL)
     { // checks if temp is at the end
         temp->next->prev = temp->prev;
+    }
+
+    if (current == temp)
+    {
+        if (temp->prev != NULL)
+        {
+            current = temp->prev;
+        }
+        else if (temp->next != NULL)
+        {
+            current = temp->next;
+        }
+        else
+        {
+            current = start;
+        }
     }
 
     struct Page *deletionnode = temp;
