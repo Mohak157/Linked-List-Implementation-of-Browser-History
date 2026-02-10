@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 struct Page{ //Doubly linked list
     char url[50];
@@ -29,14 +30,12 @@ struct Page *add_history(char *url){  //Creating a new node
 void page_visit(){
     char url[50];
     printf("Enter the url of the site ur visiting:");
-    scanf("%c",&url);
-    loading();
+    scanf("%s",url);
+    loadingbar();
     struct Page *newpage =add_history(url);
     if(start==NULL){
         start=newpage;
-        newpage->next=NULL;
-        newpage->prev=NULL;
-
+        return;
     }
     newpage->next=start;
     newpage->prev=NULL;
@@ -44,7 +43,21 @@ void page_visit(){
     start=newpage;
 }
 
+void full_history(){
+    if (start==NULL){
+        printf("History Empty \n");
+        return;
+    }
+    struct Page *temp = start;
+    while(temp != NULL){
+      printf("Page : %s\n",temp->url);
+      temp= temp->next;
+  }
+}
 
 int main(){
+    page_visit();
+    page_visit();
+    full_history();
     
 }
