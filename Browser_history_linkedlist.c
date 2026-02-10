@@ -139,7 +139,43 @@ int main()
     printf("                                                                    \n");
     printf("                                                                    \n");
 
-    page_visit();
-    page_visit();
-    full_history();
+    int choice;
+    while (1)
+    {
+        printf("\nOPERATIONS\n");
+        printf("\n1. Visit a page\n");
+        printf("\n2.Show all history\n");
+        printf("\n3.Clear all history\n");
+        printf("\n4.Clear a singular history\n");
+        printf("\n5.Forward Traversal\n");
+        printf("\n6.Backward Traversal\n");
+        printf("\nEnter operation:\t");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            page_visit();
+            break;
+        case 2:
+            full_history();
+            break;
+        case 3:
+        clear_all_history();
+        break;
+        case 4:
+        int poisition;
+        printf("Enter the position of the page u want to delete\t");
+        scanf("%d",&poisition);
+        delete_a_single_page(poisition);
+        break;
+        case 5:
+        front_navigate();
+        break;
+        case 6:
+        back_navigate();
+        break;
+        default:
+        printf("Invalid");
+        }
+    }
 }
