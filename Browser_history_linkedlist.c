@@ -50,6 +50,7 @@ void page_visit()
     newpage->prev = NULL;
     start->prev = newpage;
     start = newpage;
+    current=newpage;
 }
 
 void front_navigate() // move node one step front
