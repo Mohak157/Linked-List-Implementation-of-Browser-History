@@ -103,10 +103,6 @@ void delete_a_single_page(int pos)
     { // checks if temp is at the end
         temp->next->prev = temp->prev;
     }
-    else
-    {
-        temp->prev->next = NULL;
-    }
 
     struct Page *deletionnode = temp;
     free(deletionnode);
@@ -167,6 +163,7 @@ int main()
     printf("                                                                    \n");
 
     int choice;
+    int position;
     while (1)
     {
         printf("\nOPERATIONS\n");
@@ -190,10 +187,10 @@ int main()
             clear_all_history();
             break;
         case 4:
-            int poisition;
+
             printf("Enter the position of the page u want to delete\t");
-            scanf("%d", &poisition);
-            delete_a_single_page(poisition);
+            scanf("%d", &position);
+            delete_a_single_page(position);
             break;
         case 5:
             front_navigate();
