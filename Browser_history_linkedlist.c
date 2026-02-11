@@ -200,12 +200,14 @@ int main()
         {
         case 1:
             page_visit();
+
             break;
         case 2:
             full_history();
             break;
         case 3:
             clear_all_history();
+
             break;
         case 4:
 
@@ -215,9 +217,11 @@ int main()
             break;
         case 5:
             front_navigate();
+
             break;
         case 6:
             back_navigate();
+
             break;
         default:
             printf("Invalid");
